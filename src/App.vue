@@ -10,13 +10,19 @@
     />
     <span class ="select">
       <label for="select-material">Материал объекта: </label>
-      <select id="select-material" v-model="den">
+      <select id="select-material" @change="changeDen">
         <option value="0">Выберете материал</option>
         <option value="7800">Сталь</option>
         <option value="2700">Алюминий</option>
         <option value="8920">Медь</option>
+        <option value="-1">Особая плотность</option>
       </select>
     </span>
+    <div v-if="showCustomDen">
+      <label for="custom-den">Особая плотность: 
+      <input class="special-dencity" id="custom-den" type="text" v-model="den">
+      г/дм<sup>3</sup></label>
+    </div>
     <AddFigure @newFigure="addEntry" />
     <button v-show="volumeList.length" @click="volumeList=[]">Сбросить</button>
     <MainList
@@ -32,13 +38,13 @@ import AddFigure from './components/AddFigure.vue';
 
 export default {
   name: 'App',
-  data () {
+  data() {
     return {
       volumeList: [],
       den: 0,
       volume: 100,
       figureID: 0,
-      errors: [],
+      showCustomDen: false
     }
   },
   computed: {
@@ -55,7 +61,13 @@ export default {
       this.volumeList.push(fig);
     },
     changeDen(e) {
-      this.den = +e.target.value;
+      if (e.target.value < 0) {
+        this.den = 0;
+        this.showCustomDen = true;
+      } else {
+        this.den = +e.target.value
+        if (this.showCustomDen) this.showCustomDen = false;
+      }
     },
     updateList(signal) {
       if (Number.isInteger(signal)) {
@@ -155,6 +167,15 @@ button:focus {
 
 .select::before {
   background-color: rgba(0,0,0,.15);
+}
+
+.special-dencity {
+  background-color: #BBC1E1;
+  font-size: inherit;
+  width: 5em;
+  border-radius: 5px;
+  padding: .5em;
+  border: none;
 }
 
 </style>

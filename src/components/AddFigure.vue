@@ -26,7 +26,7 @@
       </div>
    </div>
     <div class="add-button">
-      <label for="figure_select">Выбор фигуры:</label>
+      <label v-if="showSelect" for="figure_select">Выбор фигуры:</label>
       <span class = "select">
         <select v-if="showSelect" id="figure_select" @change="setFigure">
           <option value="cylinder">Цилиндр</option>
@@ -35,8 +35,7 @@
           <option value="parallelepiped">Параллелипипед</option>
           <option value="hexprism">Призма (N=6)</option>
         </select>
-    </span>
-      <div> </div>
+      </span>
       <button v-on:click="addFigure">{{buttonName}}</button>
     </div>
   </div>
@@ -287,6 +286,6 @@ input[type='checkbox']:hover:not(:checked){
   --bc:  #275EFE;
 }
 input[type='checkbox']:focus{
-  box-shadow: 0 0 0 2px rgba(39, 94, 254, .3);
+  box-shadow: 0 0 0 2px #275EFE;
 }
 </style>
