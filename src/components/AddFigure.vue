@@ -70,9 +70,7 @@
     },
     props: {
       inital: {
-        default: function() { 
-        return {}
-        }
+        default: {}
       }
     },
     methods: {
@@ -178,7 +176,7 @@
       calcHex() {
         let [d, h, k] = this.getValues();
         let v = this.checkState1 ? k*3*d**2*h*Math.sqrt(3)/8000000 : k*d**2*h*Math.sqrt(3)/2000000;
-        return {name:"Шестигранная призма", param1:this.figureList[this.figureType].param1, 
+        return {name:"Шестигранная призма", type:this.figureType, param1:this.figureList[this.figureType].param1, 
         v1:this.val1, param2:this.figureList[this.figureType].param2, checkState1: this.checkState1,
         v2:this.val2, k:this.factor, volume:v}
       },
@@ -191,10 +189,10 @@
       }
     },
     created() {
-      if (!("type" in this.inital)) return
-      this.showSelect = false;
-      this.buttonName = "Изменить"
+      if (!("type" in this.inital)) return;
       if (!(this.inital.type in this.figureList)) return;
+      this.showSelect = false;
+      this.buttonName = "Изменить";
       ({type: this.figureType="cylinder", v1: this.val1=0, v2: this.val2=0, 
       v3: this.val3=0, k: this.factor='1', checkState1: this.checkState1=false} = this.inital);
       this.initFigure();
